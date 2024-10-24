@@ -69,15 +69,15 @@ export class KerberosNegotiationStrategy extends NativePassportStrategy {
 
           const verified = (err: Error, user: unknown, info: unknown) => {
             if (err) {
-              this.error(err);
+              return this.error(err);
             }
             if (!user) {
               if (this._noUserRedirectUrl) {
-                this.redirect(this._noUserRedirectUrl);
+                return this.redirect(this._noUserRedirectUrl);
               }
-              this.fail('No user found in the Kerberos database', 404);
+              return this.fail('No user found in the Kerberos database', 404);
             }
-            this.success(user, info);
+            return this.success(user, info);
           };
 
           const principal = context.username as string;
